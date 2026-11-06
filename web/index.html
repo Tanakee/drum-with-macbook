@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MacBook Drum</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>MacBook Drum</h1>
+    <div class="status">
+      <span id="conn" class="dot off"></span>
+      <span id="connText">未接続</span>
+      <span id="rate" class="muted"></span>
+    </div>
+    <button id="start" class="primary">音を有効にして開始</button>
+  </header>
+
+  <main>
+    <section class="stage">
+      <div class="laptop">
+        <div class="keyboard">keyboard</div>
+        <div class="deck">
+          <div class="pad-zone" data-pad="0"><span class="pad-name"></span><span class="pad-sound"></span></div>
+          <div class="trackpad">trackpad</div>
+          <div class="pad-zone" data-pad="1"><span class="pad-name"></span><span class="pad-sound"></span></div>
+        </div>
+        <div class="front-edge pad-zone" data-pad="2"><span class="pad-name"></span><span class="pad-sound"></span></div>
+      </div>
+      <p class="hint">トラックパッド左右のパームレストを指先で軽く叩いてください。キー <kbd>A</kbd> <kbd>L</kbd> <kbd>Space</kbd> でも鳴ります。</p>
+    </section>
+
+    <section class="panel">
+      <h2>センサー</h2>
+      <canvas id="scope" width="640" height="140"></canvas>
+      <div class="row">
+        <label for="threshold">しきい値 <output id="thresholdOut"></output></label>
+        <input id="threshold" type="range" min="0.003" max="0.15" step="0.001">
+      </div>
+      <div class="row">
+        <label for="refractory">連打間隔 <output id="refractoryOut"></output></label>
+        <input id="refractory" type="range" min="30" max="250" step="5">
+      </div>
+      <div class="row">
+        <label for="mask">余韻マスク <output id="maskOut"></output></label>
+        <input id="mask" type="range" min="0" max="2.5" step="0.1">
+      </div>
+      <p class="muted small">直近の最大値: <span id="peak">-</span> g ・ ノイズとして除外: <span id="rejected">0</span> 回<br>波形の赤線がしきい値です。何もしない状態で線を超えないくらいに調整してください。上の印は緑＝発音、灰＝ノイズ除外。</p>
+    </section>
+
+    <section class="panel">
+      <h2>パッド &amp; キャリブレーション</h2>
+      <p class="muted small">「記録」を押してから、その場所を <b id="calN"></b> 回叩くと位置を学習します。<b>叩く位置や強さを少しずつ変えながら</b>叩くと、演奏中の判定が安定します。</p>
+      <div id="pads"></div>
+      <div class="row buttons">
+        <button id="calReset">学習データをリセット</button>
+      </div>
+      <p id="calState" class="small"></p>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

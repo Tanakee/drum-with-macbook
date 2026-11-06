@@ -1,0 +1,101 @@
+:root {
+  --bg: #f4f4f1;
+  --fg: #1d1d1f;
+  --muted: #6e6e73;
+  --panel: #ffffff;
+  --line: #d8d8d4;
+  --metal: #dcdcd8;
+  --metal-dark: #c4c4bf;
+  --accent: #e8590c;
+  --ok: #2f9e44;
+  --hit: #ffd43b;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121214;
+    --fg: #f2f2f2;
+    --muted: #9a9aa0;
+    --panel: #1c1c1f;
+    --line: #333338;
+    --metal: #2c2c30;
+    --metal-dark: #3a3a3f;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 15px/1.6 -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+}
+header {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  padding: 16px 24px; border-bottom: 1px solid var(--line);
+}
+h1 { font-size: 20px; margin: 0; letter-spacing: .02em; }
+h2 { font-size: 15px; margin: 0 0 12px; }
+.status { display: flex; align-items: center; gap: 8px; margin-right: auto; }
+.dot { width: 10px; height: 10px; border-radius: 50%; background: var(--muted); }
+.dot.on { background: var(--ok); }
+.muted { color: var(--muted); }
+.small { font-size: 13px; }
+button {
+  font: inherit; padding: 6px 14px; border-radius: 8px;
+  border: 1px solid var(--line); background: var(--panel); color: var(--fg); cursor: pointer;
+}
+button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+button.recording { background: var(--accent); color: #fff; border-color: var(--accent); }
+main {
+  display: grid; gap: 20px; padding: 20px 24px 40px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  max-width: 1200px; margin: 0 auto;
+}
+.stage { grid-column: 1 / -1; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+
+.laptop {
+  max-width: 720px; margin: 0 auto; background: var(--metal);
+  border-radius: 18px 18px 26px 26px; padding: 18px; border: 1px solid var(--metal-dark);
+}
+.keyboard {
+  height: 120px; border-radius: 8px; background: var(--metal-dark);
+  display: grid; place-items: center; color: var(--muted); font-size: 12px; letter-spacing: .2em;
+}
+.deck { display: grid; grid-template-columns: 1fr 1.3fr 1fr; gap: 12px; margin-top: 14px; height: 170px; }
+.trackpad {
+  border-radius: 10px; background: var(--metal-dark); display: grid; place-items: center;
+  color: var(--muted); font-size: 12px; letter-spacing: .2em;
+}
+.pad-zone {
+  border-radius: 10px; border: 2px dashed var(--line); display: flex; flex-direction: column;
+  align-items: center; justify-content: center; transition: background .25s, transform .08s;
+  cursor: pointer; user-select: none;
+}
+.pad-zone.disabled { opacity: .35; }
+.front-edge { margin-top: 12px; height: 44px; flex-direction: row; gap: 10px; }
+.pad-name { font-weight: 600; }
+.pad-sound { font-size: 12px; color: var(--muted); }
+.pad-zone.hit { background: var(--hit); transform: scale(.97); transition: none; color: #1d1d1f; }
+.pad-zone.hit .pad-sound { color: #1d1d1f; }
+.hint { text-align: center; color: var(--muted); font-size: 13px; }
+kbd { border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; font-size: 12px; background: var(--panel); }
+
+canvas { width: 100%; height: 140px; background: var(--bg); border-radius: 8px; display: block; }
+.row { display: flex; align-items: center; gap: 12px; margin-top: 12px; }
+.row label { width: 150px; flex-shrink: 0; font-size: 13px; }
+.row input[type=range] { flex: 1; }
+.buttons { justify-content: flex-end; }
+
+.pad-row {
+  display: grid; grid-template-columns: 1fr auto auto auto auto; gap: 8px; align-items: center;
+  padding: 8px 0; border-bottom: 1px solid var(--line);
+}
+.pad-row select { font: inherit; padding: 4px; border-radius: 6px; border: 1px solid var(--line); background: var(--panel); color: var(--fg); }
+.pad-row .count { font-size: 12px; color: var(--muted); min-width: 52px; text-align: right; }
+
+@media (max-width: 760px) {
+  header { padding: 12px 16px; }
+  main { grid-template-columns: 1fr; padding: 16px; }
+  .deck { height: 120px; }
+  .keyboard { height: 70px; }
+}
